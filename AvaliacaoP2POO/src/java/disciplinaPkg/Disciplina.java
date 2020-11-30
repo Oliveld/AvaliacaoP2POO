@@ -9,8 +9,10 @@ package disciplinaPkg;
  *
  * @author Daniel
  */
+import Web.DbListener;
 import java.beans.Statement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -40,7 +42,7 @@ public class Disciplina {
         Exception methodEx = null;
         try {
             con = DbListener.getConection();
-            stmt = con.createStatement();
+            stmt = (Statement) con.createStatement();
             stmt.execute(Disciplina.getCreatStatement());
             rs = stmt.executeQuery("SELECT * FROM disciplinas");
             while(rs.next()){
