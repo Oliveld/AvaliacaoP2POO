@@ -10,10 +10,10 @@ package disciplinaPkg;
  * @author Daniel
  */
 import Web.DbListener;
-import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -26,6 +26,8 @@ public class Disciplina {
     String ementa;
     int ciclo;
     double nota;
+    
+    //ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
 
     public Disciplina(String nome, String ementa, int ciclo, double nota) {
         this.nome = nome;
@@ -33,8 +35,8 @@ public class Disciplina {
         this.ciclo = ciclo;
         this.nota = nota;
     }
-    
-     public static ArrayList<Disciplina> getList() throws Exception{
+
+    public static ArrayList<Disciplina> getList() throws Exception{
         ArrayList<Disciplina> list = new ArrayList<>();
         Connection con = null;
         Statement stmt = null;
@@ -42,7 +44,7 @@ public class Disciplina {
         Exception methodEx = null;
         try {
             con = DbListener.getConection();
-            stmt = (Statement) con.createStatement();
+            stmt = con.createStatement();
             stmt.execute(Disciplina.getCreatStatement());
             rs = stmt.executeQuery("SELECT * FROM disciplinas");
             while(rs.next()){
@@ -101,8 +103,8 @@ public class Disciplina {
         if(methodEx!=null) throw methodEx;
         
     }
-    
-    public static void delete(String nome) throws Exception{
+ 
+        public static void delete(String nome) throws Exception{
         Connection con = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -120,7 +122,7 @@ public class Disciplina {
         if(methodEx!=null) throw methodEx;
         
     }
-    
+
     public String getNome() {
         return nome;
     }
@@ -153,6 +155,8 @@ public class Disciplina {
         this.nota = nota;
     }
 
+
+    
     public static String getCreatStatement(){
         return "CREATE TABLE IF NOT EXISTS disciplinas("
                 + "nome VARCHAR(50) UNIQUE NOT NULL,"
@@ -160,5 +164,4 @@ public class Disciplina {
                 + "ciclo int,"
                 + "nota double )";
     }
-    
 }
